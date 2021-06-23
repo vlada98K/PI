@@ -1,0 +1,13 @@
+const get_conn = require('./utils').get_conn;
+
+const conn = get_conn();
+
+let query = "SELECT city, lastName, NoA, DATE_FORMAT(date, '%d.%m.%Y') as date \
+FROM data_set ORDER BY NoA DESC LIMIT 20";
+
+
+conn.promise()
+    .query(query)
+    .then(([rows]) => console.table(rows))
+    .catch((err) => { console.error(err) })
+    .then(conn.end());
