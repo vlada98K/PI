@@ -1,0 +1,14 @@
+const get_conn = require('./utils').get_conn;
+
+let query_insert = "INSERT INTO data_set \
+(id, date, city, lastName, NoA) \
+VALUES \
+(Null, '2021-04-17', 'Александровск', 'elon musk', '202')"; 
+
+const conn = get_conn();
+
+conn.promise()
+    .query(query_insert)
+    .then(() => console.log('row inserted'))
+    .catch((err) => console.error(err))
+    .then(conn.end());
