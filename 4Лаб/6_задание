@@ -1,0 +1,14 @@
+const get_conn = require('./utils').get_conn;
+
+const conn = get_conn();
+
+let query = "SELECT date, city, lastName, NoA \
+FROM data_set WHERE lastName = ? AND id = ?";
+
+let params = ['laura abc', 78];
+
+conn.promise()
+    .query(query, params)
+    .then(([rows]) => console.table(rows))
+    .catch((err) => { console.error(err) })
+    .then(conn.end());
