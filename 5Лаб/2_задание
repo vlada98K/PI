@@ -1,0 +1,7 @@
+CREATE VIEW view_02 AS
+SELECT `students`.`id`, `students`.`lastName`
+FROM `students`
+JOIN `studygroups` ON `studygroups`.`idGr` = `students`.`keyGroup`
+JOIN `curators` ON `curators`.`idCur` = `studygroups`.`keyCur`
+WHERE `studygroups`.`keyCur` = '5'
+ORDER BY `lastName` ASC
