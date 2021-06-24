@@ -1,0 +1,8 @@
+CREATE VIEW view_04 AS
+SELECT `students`.`id`, `students`.`lastName`, `marks`.`mark`
+FROM `students`
+JOIN `studygroups` ON `studygroups`.`idGr` = `students`.`keyGroup`
+JOIN `edusubjects` ON `edusubjects`.`id` = `marks`.`keySubject`
+JOIN `marks` ON `marks`.`keyStudent` = `students`.`id`
+WHERE `edusubjects`.`nameSubject` = 'ООП' AND `studygroups`.`nameGroup` = 'ПИнб-2'
+ORDER BY `lastName` ASC
