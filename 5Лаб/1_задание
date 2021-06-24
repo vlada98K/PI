@@ -1,0 +1,10 @@
+CREATE VIEW view_01 AS
+SELECT `studygroups`.`nameGroup`, `students`.`id`,
+    CONCAT_WS(
+        ' ',
+        `students`.`lastName`,
+        `students`.`firstName`
+    ) AS `fullName`
+FROM `students`
+JOIN `studygroups` ON `studygroups`.`idGr` = `students`.`keyGroup`
+ORDER BY  `studygroups`.`nameGroup` ASC, `fullName` ASC
