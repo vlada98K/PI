@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Оскар</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="/css/style.css" />
+</head>
+<body>
+    <center>
+    <h3>Список обладателей</h1>
+    <button><p><a href="/create">Добавить обладателя</a></p></button>
+    <table>
+        <tr>
+            <th>Редактор</th>
+            <th>год&nbsp;<a href="/sort/model.ASC">▲</a><a href="/sort/model.DESC">▼</a></th>
+            <th>возрост&nbsp;<a href="/sort/country.ASC">▲</a><a href="/sort/country.DESC">▼</a></th>
+            <th>Класс</th>
+            <th>имя&nbsp;<a href="/sort/year.ASC">▲</a><a href="/sort/year.DESC">▼</a></th>
+            <th>фильм&nbsp;<a href="/sort/cost.ASC">▲</a><a href="/sort/cost.DESC">▼</a></th>
+        </tr>
+        {{#each cars}}
+            <tr>
+                <td width=180 class="editor">
+                    <form action="/edit/{{this.id}}" method="GET" style="display:inline;">
+                        <input type="submit" value="Изменить" />
+                    </form>
+                    <form action="/delete/{{this.id}}" method="POST" style="display:inline;">
+                        <input type="submit" value="Удалить" />
+                    </form>
+                </td>
+                <td>{{this.model}}</td>
+                <td>{{this.country}}</td>
+                <td>{{this.type}}</td>
+                <td>{{this.year}}</td>
+                <td>{{this.cost}}</td>
+            </tr>
+        {{/each}}
+    </table>
+    </center>
+</body>
+<html>
