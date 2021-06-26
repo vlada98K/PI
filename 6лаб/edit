@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Изменить данные</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="/css/style.css" />
+    <style>.field{width:200px;}</style>
+</head>
+<body>
+    <center>
+    <h1>Изменить данные</h1>
+    <form action="/edit" method="POST">
+        <input type="hidden" name="id" value="{{cars.id}}" />
+        
+        <label>Год</label><br>
+        <input name="model" class="field" value="{{cars.model}}" /><br><br>
+
+        <label>возрост</label><br>
+        <input name="country" class="field" value="{{cars.country}}" /><br><br>
+        
+        <label>имя</label><br>
+        <input name="type" class="field" value="{{cars.type}}" /><br><br>
+
+        <label>фильм</label><br>
+        <input name="year" class="field" value="{{cars.year}}" /><br><br>
+
+        
+        <input type="submit" value="Сохранить" />
+    </form>
+    <br>
+    <a href="/">На главную</a>
+    </center>
+</body>
+<html>
