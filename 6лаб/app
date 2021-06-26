@@ -1,0 +1,105 @@
+const mysql = require("mysql2");
+const express = require("express");
+
+const pool = mysql.createPool({
+host: "pgsha.ru",
+port: "35006",
+user: "soft0081",
+password: "Ob5dQ4gX",
+database: "soft0081_labrab6"
+});
+
+const app = express();
+const urlencodedParser = express.urlencoded({extended: false});
+app.use('/css', express.static(__dirname + '/css'));
+app.set("view engine", "hbs");
+
+/* отобразить полный список */
+
+app.get("/", function(req, res) { // получаем список авто
+let query = "SELECT * FROM cars";
+pool.query(query, function(err, data) {
+if (err) return console.log(err);
+res.render("index.hbs", {
+cars: data
+});
+});
+});
+
+/* добавить новую запись */
+
+app.get("/create", function(req, res) { // добавление записи
+res.render("create.hbs");
+});
+
+app.post("/create", urlencodedParser, function (req, res) { // сохранить запись в БД
+if (!req.body) return res.sendStatus(400);
+const year = req.body.Year;
+const age = req.body.age;
+const name = req.body.name;
+const movie = req.body.movie;
+let query = "INSERT INTO cars (year, age, name, movie) VALUES (?,?,?,?,?)";
+let params = [model, country, type, year, cost];
+pool.query(query, params, function(err, data) {
+if (err) return console.error(err);
+res.redirect("/");
+});
+});
+
+/* изменить данные */
+
+app.get("/edit/:id", function(req, res) {
+const id = req.params.id;
+pool.query("SELECT * FROM cars WHERE id=?", [id], function(err, data) {
+if (err) return console.error(err);
+res.render("edit.hbs", {
+cars: data[0]
+});
+});
+});
+
+app.post("/edit", urlencodedParser, function (req, res) {
+if (!req.body) return res.sendStatus(400);
+const id = req.body.id;
+const year = req.body.year;
+const age = req.body.age;
+const name = req.body.name;
+const movie = req.body.movie;
+let query = "UPDATE cars SET year=?, age=?, name=?, movie=? WHERE id=?";
+let params = [year, age, name, movie, id];
+pool.query(query, params, function(err, data) {
+if (err) return console.error(err);
+res.redirect("/");
+});
+});
+
+/* удалить запись */
+
+app.post("/delete/:id", function(req, res) {
+const id = req.params.id;
+pool.query("DELETE FROM cars WHERE id=?", [id], function(err, data) {
+if (err) return console.log(err);
+res.redirect("/");
+});
+});
+
+/* отсортировать */
+
+app.get("/sort/:field.:direct", function(req, res) {
+const field = req.params.field;
+const direct = req.params.direct;
+let query = "SELECT * FROM cars ORDER BY " + field + " " + direct;
+pool.query(query, function(err, data) {
+if (err) return console.log(err);
+res.render("index.hbs", {
+cars: data
+});
+});
+});
+
+app.listen(3000, function() {
+console.log("смотрим работу через браузер - http://localhost:3000/");
+let isWin = process.platform === "win32";
+let hotKeys = isWin? "Ctrl+C": "Ctrl+D"; // Windows / Linux
+console.log(`остановить сервер - ${hotKeys}`);
+});
